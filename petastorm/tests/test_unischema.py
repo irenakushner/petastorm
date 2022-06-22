@@ -428,20 +428,6 @@ def test_arrow_schema_arrow_1644_list_of_list():
     assert not hasattr(unischema, 'list_of_list')
 
 
-def test_arrow_schema_arrow_list_of_list_no_struct():
-    arrow_schema = pa.schema([
-        pa.field('id', pa.string()),
-        pa.field('list_of_list',
-                 pa.list_(pa.list_(pa.field('a', pa.int32()))))
-    ])
-
-    mock_dataset = _mock_parquet_dataset([], arrow_schema)
-
-    unischema = Unischema.from_arrow_schema(mock_dataset)
-    assert getattr(unischema, 'id').name == 'id'
-    assert hasattr(unischema, 'list_of_list')
-
-
 def test_arrow_schema_convertion_ignore():
     arrow_schema = pa.schema([
         pa.field('list_of_int', pa.float16()),

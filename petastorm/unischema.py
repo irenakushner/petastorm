@@ -335,8 +335,7 @@ class Unischema(object):
             field_type = arrow_field.type
             field_shape = ()
             if isinstance(field_type, ListType):
-                # TODO: is there a better way to handle structs that may be nested further in a list of lists?
-                if isinstance(field_type.value_type, pyStructType):
+                if isinstance(field_type.value_type, ListType) or isinstance(field_type.value_type, pyStructType):
                     warnings.warn('[ARROW-1644] Ignoring unsupported structure %r for field %r'
                                   % (field_type, column_name))
                     continue
